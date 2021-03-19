@@ -44,7 +44,7 @@ func EncodeSSHKey(public *rsa.PublicKey) ([]byte, error) {
 	return ssh.MarshalAuthorizedKey(publicKey), nil
 }
 
-func MakeSSHKeyPair() (string, string, error) {
+func MakeSSHKeyPair() (pubKey, priKey string, err error) {
 
 	pkey, pubkey, err := GenerateKey(2048)
 	if err != nil {
@@ -56,5 +56,7 @@ func MakeSSHKeyPair() (string, string, error) {
 		return "", "", err
 	}
 
-	return string(EncodePrivateKey(pkey)), string(pub), nil
+	pubKey = string(pub)
+	priKey = string(EncodePrivateKey(pkey))
+	return
 }
